@@ -210,7 +210,7 @@ def chk(card):
     data=data,
 )
 	text = response.text
-	pattern = r'Status code (.*?)\s*</li>'
+	pattern = r'Reason: (.*?)\s*</li>'
 	
 	
 	match = re.search(pattern, text)
