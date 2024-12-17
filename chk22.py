@@ -202,7 +202,7 @@ def chk(card):
 )
 
 	text = response.text
-	pattern = r'Status code \d+: (.*?)\s*</li>'
+	pattern = r'Status code (.*?)\s*</li>'
 
 	
 	
