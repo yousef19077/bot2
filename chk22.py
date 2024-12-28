@@ -23,12 +23,15 @@ def chk(card):
 	mm = parts[1]
 	yy = parts[2]
 	cvc = parts[3]
-
-	if "20" in yy:
-		yy = yy.split("20")[1]
+	mo = int(mm)
+	mm = str(mo)
+	if len(yy) == 2:
+		yy = f"20{yy}"
 	
 	
 	r = requests.session()
+	
+
 
 
 
