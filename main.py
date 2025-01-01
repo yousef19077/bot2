@@ -145,13 +145,13 @@ def start_command(message):
     video_url = random.choice(video_urls)
     bot.send_video(message.chat.id, video_url, caption="𝐉𝐮𝐬𝐭 𝐬𝐞𝐧𝐝 𝐲𝐨𝐮𝐫 𝐜𝐨𝐦𝐛𝐨", parse_mode='Markdown', reply_to_message_id=message.message_id)
 
-@bot.message_handler(commands=['qw'])
-def qw_command(message):
+@bot.message_handler(commands=['vbv'])
+def vbv_command(message):
     if str(message.chat.id) not in allowed_users:
         bot.reply_to(message, "You are not authorized to use this bot.")
         return
     
-    card_data = message.text.replace('/qw ', '')  # الحصول على بيانات البطاقة من نص الرسالة بعد "/qw"
+    card_data = message.text.replace('/vbv ', '')  # الحصول على بيانات البطاقة من نص الرسالة بعد "/qw"
     
     if '|' in card_data:  # تحقق إذا كانت الرسالة تحتوي على تفاصيل البطاقة
         bot.send_chat_action(message.chat.id, 'typing')  # إشعار الكتابة
