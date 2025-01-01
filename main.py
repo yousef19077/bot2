@@ -2,7 +2,7 @@ import telebot, time, threading, random,requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 from telebot import types
-from vbv import *
+from chk22 import *
 from bin import *
 
 admin_id = '6309252183'
