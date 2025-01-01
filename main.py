@@ -1,10 +1,12 @@
-import telebot, time, threading, random
+import telebot, time, threading, random,requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 from telebot import types
-from chk22 import *
+from vbv import *
 from bin import *
 
 admin_id = '6309252183'
-token = "7395850728:AAEKXSdbTs_ZfsXy8c3zFg5fqHEkYeK9v1I"
+token = "8162909867:AAGOp5nw_d9CMXGrqGS6Zig3XFyXw8m8mKQ"
 bot = telebot.TeleBot(token, parse_mode="HTML")
 
 allowed_users = [admin_id]  # قائمة لتخزين معرفات المستخدمين المسموح لهم
@@ -42,7 +44,7 @@ def check_card(card, message):
     start_time = time.time()
     brand, type, level, bank, country_name, country_flag = info(card)
     try:
-        result = chk(card)
+        result = vbv(card)
     except Exception as e:
         result = f"Error: {e}"
     elapsed_time = round(time.time() - start_time, 2)
@@ -50,7 +52,7 @@ def check_card(card, message):
     bot.delete_message(message.chat.id, processing_message.message_id)  # حذف رسالة المعالجة
     
     response = ""
-    if any(keyword in result for keyword in ['funds', 'OTP', 'Charged', 'Funds', 'avs', 'postal', 'approved', 'Nice!', 'Approved', 'cvv: Gateway Rejected: cvv', 'does not support this type of purchase.', 'Duplicate', 'Successful', 'Authentication Required', 'successful', 'Thank you', 'confirmed', 'successfully']):
+    if any(keyword in result for keyword in ['funds', 'challenge required', 'Charged', 'Funds', 'Challenge Required', 'postal', 'approved', 'Nice!', 'Approved', 'cvv: Gateway Rejected: cvv', 'does not support this type of purchase.', 'Duplicate',  'Authentication Required', 'Thank you', 'confirmed','challenge required']):
         response = f"𝐀𝐩𝐩𝐫𝐨𝐯𝐞𝐝 ✅\n\n𝐂𝐚𝐫𝐝: <code>{card}</code>\n𝐆𝐚𝐭𝐞𝐰𝐚𝐲: Braintree Auth 🔥\n𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: {result}\n\n𝗜𝗻𝗳𝗼: {brand} - {type} - {level}\n𝐈𝐬𝐬𝐮𝐞𝐫: {bank}\n𝐂𝐨𝐮𝐧𝐭𝐫𝐲: {country_name} {country_flag}\n\n𝐓𝐢𝐦𝐞: {elapsed_time} 𝐬𝐞𝐜𝐨𝐧𝐝𝐬\n𝐁𝐲: <a href='tg://openmessage?user_id=6309252183'>JOO</a>"
     else:
         response = f"𝐃𝐞𝐜𝐥𝐢𝐧𝐞𝐝 ❌\n\n𝐂𝐚𝐫𝐝: <code>{card}</code>\n𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: {result}\n\n𝗜𝗻𝗳𝗼: {brand} - {type} - {level}\n𝐈𝐬𝐬𝐮𝐞𝐫: {bank}\n𝐂𝐨𝐮𝐧𝐭𝐫𝐲: {country_name} {country_flag}\n\n𝐓𝐢𝐦𝐞: {elapsed_time} 𝐬𝐞𝐜𝐨𝐧𝐝𝐬"
@@ -86,7 +88,7 @@ def process(message):
             start_time = time.time()
             brand, type, level, bank, country_name, country_flag = info(card)
             try:
-                result = chk(card)
+                result = vbv(card)
             except Exception as e:
                 bot.send_message(admin_id, f"An error occurred: {e}")
                 result = "ERROR"
@@ -94,7 +96,7 @@ def process(message):
             print(result)
             card = card.replace('\n', '')
                 
-            if any(keyword in result for keyword in ['funds', 'OTP', 'Charged', 'Funds', 'avs', 'postal', 'approved', 'Nice!', 'Approved', 'cvv: Gateway Rejected: cvv', 'does not support this type of purchase.', 'Duplicate', 'Successful', 'Authentication Required', 'successful', 'Thank you', 'confirmed', 'successfully']):
+            if any(keyword in result for keyword in ['funds', 'OTP', 'Charged', 'Funds', 'Challenge Required', 'postal', 'approved', 'Nice!', 'Approved', 'cvv: Gateway Rejected: cvv', 'does not support this type of purchase.', 'Duplicate', 'challenge required', 'Authentication Required', 'challenge required', 'Thank you', 'confirmed', 'challenge required']):
                 live += 1
                 bot.reply_to(message, f'𝐀𝐩𝐩𝐫𝐨𝐯𝐞𝐝 ✅\n\n𝐂𝐚𝐫𝐝: <code>{card}</code>\n𝐆𝐚𝐭𝐞𝐰𝐚𝐲: Braintree Auth 🔥\n𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: {result}\n\n𝗜𝗻𝗳𝗼: {brand} - {type} - {level}\n𝐈𝐬𝐬𝐮𝐞𝐫: {bank}\n𝐂𝐨𝐮𝐧𝐭𝐫𝐲: {country_name} {country_flag}\n\n𝐓𝐢𝐦𝐞: {elapsed_time} 𝐬𝐞𝐜𝐨𝐧𝐝𝐬\n𝐁𝐲: <a href="tg://openmessage?user_id=6309252183">JOO</a>', parse_mode='HTML')
             elif 'RISK' in result:
@@ -114,7 +116,7 @@ def process(message):
             
             bot.edit_message_reply_markup(chat_id=message.chat.id, message_id=send.message_id, reply_markup=buttons)
 
-            for _ in range(21):
+            for _ in time.sleep(1):
                 if stop_processes.get(process_id):
                     bot.edit_message_caption(chat_id=message.chat.id, message_id=send.message_id, caption="𝐒𝐭𝐨𝐩𝐩𝐞𝐝 𝐬𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲")
                     return
@@ -143,13 +145,13 @@ def start_command(message):
     video_url = random.choice(video_urls)
     bot.send_video(message.chat.id, video_url, caption="𝐉𝐮𝐬𝐭 𝐬𝐞𝐧𝐝 𝐲𝐨𝐮𝐫 𝐜𝐨𝐦𝐛𝐨", parse_mode='Markdown', reply_to_message_id=message.message_id)
 
-@bot.message_handler(commands=['qw'])
-def qw_command(message):
+@bot.message_handler(commands=['vbv'])
+def vbv_command(message):
     if str(message.chat.id) not in allowed_users:
         bot.reply_to(message, "You are not authorized to use this bot.")
         return
     
-    card_data = message.text.replace('/qw ', '')  # الحصول على بيانات البطاقة من نص الرسالة بعد "/qw"
+    card_data = message.text.replace('/vbv ', '')  # الحصول على بيانات البطاقة من نص الرسالة بعد "/qw"
     
     if '|' in card_data:  # تحقق إذا كانت الرسالة تحتوي على تفاصيل البطاقة
         bot.send_chat_action(message.chat.id, 'typing')  # إشعار الكتابة
