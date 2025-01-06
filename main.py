@@ -1,4 +1,6 @@
-import telebot, time, threading, random,requests
+import telebot, time, threading, random, requests
+import json
+import os
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 from telebot import types
@@ -9,7 +11,25 @@ admin_id = '6309252183'
 token = "8162909867:AAGOp5nw_d9CMXGrqGS6Zig3XFyXw8m8mKQ"
 bot = telebot.TeleBot(token, parse_mode="HTML")
 
-allowed_users = [admin_id]  # قائمة لتخزين معرفات المستخدمين المسموح لهم
+# تحميل قائمة المستخدمين المسموح لهم من ملف JSON
+def load_allowed_users():
+    try:
+        with open("allowed_users.json", "r") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []  # إذا كان الملف غير موجود أو يحتوي على خطأ، نعيد قائمة فارغة
+
+allowed_users = load_allowed_users()
+
+# إضافة دالة لإعادة التشغيل اليدوي
+@bot.message_handler(commands=['restart'])
+def restart(message):
+    if str(message.chat.id) == admin_id:  # التأكد من أن الأمر فقط للمسؤول
+        bot.send_message(message.chat.id, "Bot is restarting... 🔄")
+        time.sleep(2)  # الانتظار لبضع ثوانٍ قبل إعادة التشغيل
+        os.execv(sys.executable, ['python'] + sys.argv)  # إعادة تشغيل البوت
+    else:
+        bot.send_message(message.chat.id, "You are not authorized to restart the bot.")
 
 video_urls = [
     "https://t.me/O_An6/106",
@@ -98,7 +118,7 @@ def process(message):
                 
             if any(keyword in result for keyword in ['Challenge Required', 'OTP', 'Charged', 'Funds', 'challenge required', 'postal', 'approved', 'Nice!', 'Approved', 'cvv: Gateway Rejected: cvv', 'does not support this type of purchase.', 'Duplicate', 'Authentication Required', 'Thank you', 'confirmed']):
                 live += 1
-                bot.reply_to(message, f'𝐀𝐩𝐩𝐫𝐨𝐯𝐞𝐝 ✅\n\n𝐂𝐚𝐫𝐝: <code>{card}</code>\n𝐆𝐚𝐭𝐞𝐰𝐚𝐲: Braintree Auth 🔥\n𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: {result}\n\n𝗜𝗻𝗳𝗼: {brand} - {type} - {level}\n𝐈𝐬𝐬𝐮𝐞𝐫: {bank}\n𝐂𝐨𝐮𝐧𝐭𝐫𝐲: {country_name} {country_flag}\n\n𝐓𝐢𝐦𝐞: {elapsed_time} 𝐬𝐞𝐜𝐨𝐧𝐝𝐬\n𝐁𝐲: <a href="tg://openmessage?user_id=6309252183">JOO</a>', parse_mode='HTML')
+                bot.reply_to(message, f'𝐀𝐩𝐩𝐫𝐨𝐯𝐞𝐝 ✅\n\n𝐂𝐚𝐫𝐝: <code>{card}</code>\n𝐆𝐚𝐭𝐞𝐰𝐚𝐲: Braintree Auth 🔥\n𝐑𝐞𝐬𝐩𝐨𝐧𝐬𝐞: {result}\n\n𝗜𝗻𝗳𝗼: {brand} - {type} - {level}\n𝐈𝐬𝐬𝐮𝐞𝐫: {bank}\n𝐂𝐨𝐮𝐧𝐭𝐫𝐲: {country_name} {country_flag}\n\n𝐓𝐢𝐦𝐞: {elapsed_time} 𝐬𝐞𝐜𝐨𝐧𝐝𝐬\n𝐁𝐲: <a href=\"tg://openmessage?user_id=6309252183\">JOO</a>', parse_mode='HTML')
             elif 'RISK' in result:
                 risko +=1
             else:
@@ -135,41 +155,14 @@ def main(message):
     if str(message.chat.id) not in allowed_users:  # التحقق إذا كان المستخدم مسموحًا له
         bot.reply_to(message, "You are not authorized to use this bot.")
         return
-    threading.Thread(target=process, args=[message]).start()
 
-@bot.message_handler(commands=['start'])
-def start_command(message):
-    if str(message.chat.id) not in allowed_users:
-        bot.reply_to(message, "You are not authorized to use this bot.")
-        return   
-    video_url = random.choice(video_urls)
-    bot.send_video(message.chat.id, video_url, caption="𝐉𝐮𝐬𝐭 𝐬𝐞𝐧𝐝 𝐲𝐨𝐮𝐫 𝐜𝐨𝐦𝐛𝐨", parse_mode='Markdown', reply_to_message_id=message.message_id)
+    if message.document.mime_type == 'text/plain':
+        process(message)
 
-@bot.message_handler(commands=['vbv'])
-def vbv_command(message):
-    if str(message.chat.id) not in allowed_users:
-        bot.reply_to(message, "You are not authorized to use this bot.")
-        return
-    
-    card_data = message.text.replace('/vbv ', '')  # الحصول على بيانات البطاقة من نص الرسالة بعد "/qw"
-    
-    if '|' in card_data:  # تحقق إذا كانت الرسالة تحتوي على تفاصيل البطاقة
-        bot.send_chat_action(message.chat.id, 'typing')  # إشعار الكتابة
-        result_message = check_card(card_data, message)  # فحص البطاقة باستخدام الدالة check_card
-        bot.reply_to(message, result_message, parse_mode='HTML')
-    else:
-        bot.reply_to(message, "Please provide a valid card in the format: number|mm|yy|cvv", parse_mode='HTML')
-
-@bot.message_handler(commands=['add_user'])
-def add_user_command(message):
-    if str(message.chat.id) != admin_id:
-        bot.reply_to(message, "You are not authorized to add users.")
-        return
+# جعل البوت يعمل باستمرار حتى مع إعادة التشغيل
+while True:
     try:
-        new_user_id = message.text.split()[1]
-        allowed_users.append(new_user_id)
-        bot.reply_to(message, f"User {new_user_id} has been added.")
-    except IndexError:
-        bot.reply_to(message, "Please provide a valid user ID.")
-
-bot.infinity_polling()
+        bot.polling(none_stop=True)
+    except Exception as e:
+        print(f"Error: {e}")
+        time.sleep(10)
