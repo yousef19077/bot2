@@ -16,6 +16,7 @@ def chk(card):
 	from requests.packages.urllib3.exceptions import InsecureRequestWarning
 	
 	requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+	user = user_agent.generate_user_agent()
 	
 	card = card.strip()
 	parts = re.split('[|/:]', card)
